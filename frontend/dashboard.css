@@ -7,14 +7,13 @@
 body {
   font-family: 'Segoe UI', sans-serif;
   background: #f2f6fc;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .dashboard-wrapper {
   display: flex;
   max-width: 1100px;
   margin: 40px auto;
-  height: 80vh;
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
@@ -22,6 +21,7 @@ body {
 
 /* LEFT PANEL */
 .left-panel {
+  height: 100%;
   background: #1e40af;
   color: white;
   padding: 40px 30px;
@@ -66,6 +66,17 @@ body {
 
 .filter:hover {
   background: #2563eb;
+}
+
+.quick-filters input[type="number"] {
+  padding: 8px;
+  border-radius: 4px;
+  border: none;
+  margin-bottom: 5px;
+}
+
+.quick-filters button {
+  margin-top: 5px;
 }
 
 .btn.white {

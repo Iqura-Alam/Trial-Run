@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   document.getElementById('logoutBtn').addEventListener('click', () => {
     localStorage.removeItem('token');
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
   });
 });
 
@@ -59,4 +59,41 @@ function renderListings(listings) {
 
 function viewListing(id) {
   window.location.href = `chat.html?id=${id}`;
+}
+document.getElementById("logoutBtn").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  // Clear local and session storage
+  localStorage.clear();
+  sessionStorage.clear();
+
+  // Clear cookie (if used)
+  //document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+  // Redirect to login or landing page
+  window.location.href = "index.html";
+});
+async function filterByPrice() {
+  const token = localStorage.getItem('token');
+  const min = document.getElementById('minPrice').value;
+  const max = document.getElementById('maxPrice').value;
+
+  if (!min || !max || isNaN(min) || isNaN(max)) {
+    return alert("Please enter valid minimum and maximum prices.");
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/listings/price?min=${min}&max=${max}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      renderListings(data);
+    } else {
+      alert("Failed to fetch price-filtered listings");
+    }
+  } catch (error) {
+    alert("Something went wrong");
+  }
 }

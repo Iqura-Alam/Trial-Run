@@ -118,3 +118,21 @@ router.post('/', auth, async (req, res) => {
 });
 
 module.exports = router;
+// Example route in your listings router
+router.get('/price', async (req, res) => {
+  const min = parseFloat(req.query.min);
+  const max = parseFloat(req.query.max);
+
+  if (isNaN(min) || isNaN(max)) {
+    return res.status(400).json({ message: "Invalid price range" });
+  }
+
+  try {
+    const listings = await Listing.find({
+      price: { $gte: min, $lte: max }
+    });
+    res.json(listings);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
