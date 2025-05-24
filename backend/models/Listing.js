@@ -11,6 +11,6 @@ const listingSchema = new mongoose.Schema({
   visibility: { type: String, enum: ['UniversityOnly', 'Global'], required: true },
   university: { type: String, required: true },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // link to logged in user
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model('Listing', listingSchema);
