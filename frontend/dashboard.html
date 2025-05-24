@@ -2,30 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Student Marketplace Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
-  <header>
-    <h1>Welcome to the Student Marketplace</h1>
-    <button id="logoutBtn">Logout</button>
-  </header>
+  <div class="dashboard-wrapper">
+    <!-- Left blue panel -->
+    <div class="left-panel">
+      <h1>Welcome to <br><span>CampusMarket</span></h1>
+      <p>Buy and sell with verified university students.</p>
+      <div class="quick-filters">
+        <button class="filter" onclick="filterByCategory('Textbooks')">Textbooks</button>
+        <button class="filter" onclick="filterByCategory('Tutoring')">Tutoring</button>
+        <button class="filter" onclick="filterByCategory('Electronics')">Electronics</button>
+        <button class="filter" onclick="filterByCategory('Skill Exchange')">Skill Exchange</button>
+      </div>
+      <button class="btn white" onclick="window.location.href='createListing.html'">+ Create Listing</button>
+      <button class="btn white" id="logoutBtn"onclick="window.location.href='index.html'">Logout</button>
 
-  <main>
-    <input type="text" id="searchBar" placeholder="Search for items or services..." />
-
-    <div id="quickFilters">
-      <button onclick="filterByCategory('Textbooks')">Textbooks</button>
-      <button onclick="filterByCategory('Tutoring')">Tutoring</button>
-      <button onclick="filterByCategory('Electronics')">Electronics</button>
-      <button onclick="filterByCategory('Skill Exchange')">Skill Exchange</button>
     </div>
 
-    <div id="listingContainer"></div>
+    <!-- Right white panel -->
+    <div class="right-panel">
+      <div class="search-bar">
+        <input type="text" id="searchBar" placeholder="Search for items or services..." />
+      </div>
+      <div id="listingContainer" class="listing-grid"></div>
+    </div>
+  </div>
 
-    <button onclick="window.location.href='createListing.html'">Create a Listing</button>
-  </main>
-
-  <script src="dashboard.js"></script>
+  <script src="dashboard.js"> </script>
 </body>
 </html>

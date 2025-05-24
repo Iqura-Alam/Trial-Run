@@ -51,12 +51,12 @@ function renderListings(listings) {
       <h3>${listing.title}</h3>
       <p>${listing.category} • ${listing.priceType}: ${listing.price}</p>
       <p>${listing.university}</p>
-      <button onclick="viewListing('${listing._id}')">View</button>
+      <button onclick="viewListing('${listing._id}')">Chat</button>
     `;
     container.appendChild(card);
   });
 }
 
 function viewListing(id) {
-  window.location.href = `listing.html?id=${id}`;
+  window.location.href = `chat.html?id=${id}`;
 }
