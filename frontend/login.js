@@ -18,7 +18,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
       showLoginMessage("✅ Login successful! Redirecting...", "green");
 
       setTimeout(() => {
-        window.location.href = 'dashboard.html'; // ✅ Redirect to listing form
+        window.location.href = 'selectAction.html'; // ✅ Redirect to listing form
       }, 1000);
     } else {
       showLoginMessage(result.message || "Login failed.", "red");
