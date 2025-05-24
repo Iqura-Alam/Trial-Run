@@ -1,4 +1,3 @@
-<!-- public/myListings.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +11,32 @@
     <div class="header">
       <h2>My Listings</h2>
     </div>
-    <div id="listingsContainer" class="my-listings-grid"></div>
+    <div id="listingsContainer" class="my-listings-grid">
+      <!-- Sample cards for preview -->
+      <div class="my-listing-card">
+        <h3>Math</h3>
+        <p>Book</p>
+        <div class="status-container">
+          <span class="status-label sold">Sold</span>
+        </div>
+      </div>
+      <div class="my-listing-card">
+        <h3>Tutoring</h3>
+        <p>CSE student</p>
+        <div class="status-container">
+          <span class="status-label available">Available</span>
+          <button class="mark-sold-btn">Mark as Sold</button>
+        </div>
+      </div>
+      <div class="my-listing-card">
+        <h3>Phone</h3>
+        <p>Old iPhone SE 20</p>
+        <div class="status-container">
+          <span class="status-label available">Available</span>
+          <button class="mark-sold-btn">Mark as Sold</button>
+        </div>
+      </div>
+    </div>
     <p id="noListingsMessage" class="no-listings" style="display:none;">You have no active listings.</p>
   </div>
 

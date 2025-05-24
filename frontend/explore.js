@@ -84,3 +84,27 @@ document.getElementById("logoutBtn").addEventListener("click", function (e) {
   // Redirect to login or landing page
   window.location.href = "index.html";
 });
+async function filterByPrice() {
+  const token = localStorage.getItem('token');
+  const min = document.getElementById('minPrice').value;
+  const max = document.getElementById('maxPrice').value;
+
+  if (!min || !max || isNaN(min) || isNaN(max)) {
+    return alert("Please enter valid minimum and maximum prices.");
+  }
+
+  try {
+    const res = await fetch(`http://localhost:3000/api/listings/price?min=${min}&max=${max}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      renderListings(data);
+    } else {
+      alert("Failed to fetch price-filtered listings");
+    }
+  } catch (error) {
+    alert("Something went wrong");
+  }
+}

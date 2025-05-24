@@ -8,6 +8,7 @@ const multer = require('multer');
 const path = require('path');
 const Listing = require('./models/Listing');
 const exploreRoutes = require('./routes/explore');
+const adminRoutes = require('./routes/admin');
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ const io = socketIo(server, {
 app.use(cors());
 app.use(express.json());
 app.use('/api/explore', exploreRoutes);
+app.use('/admin', adminRoutes);
 
 
 
@@ -39,6 +41,7 @@ app.get('/api/check-items', async (req, res) => {
   }
 });
 // Static folder for uploaded images
+app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 // Test route

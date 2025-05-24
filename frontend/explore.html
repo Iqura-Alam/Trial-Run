@@ -16,6 +16,10 @@
         <button class="filter" onclick="filterByCategory('Tutoring')">Tutoring</button>
         <button class="filter" onclick="filterByCategory('Electronics')">Electronics</button>
         <button class="filter" onclick="filterByCategory('Skill Exchange')">Skill Exchange</button>
+         <h3>Filter by Price</h3>
+          <input type="number" id="minPrice" placeholder="Min Price" />
+          <input type="number" id="maxPrice" placeholder="Max Price" />
+          <button onclick="filterByPrice()">Apply</button>
       </div>
       <button class="btn white" onclick="window.location.href='dashboard.html'">Switch to Selling</button>
       <button class="btn white" id="logoutBtn">Logout</button>

@@ -10,12 +10,13 @@ async function fetchMyListings() {
 
   const listings = await res.json();
   container.innerHTML = listings.map(l => `
-    <div class="listing-card">
+    <div class="my-listing-card">
       <h3>${l.title}</h3>
       <p>${l.description}</p>
-      <p>Status: <strong>${l.status}</strong></p>
-      ${l.status === 'Available' ? `<button onclick="markAsSold('${l._id}')">Mark as Sold</button>` : ''}
-      <hr>
+      <div class="status-container">
+        <span class="status-label ${l.status === 'Available' ? 'available' : 'sold'}">${l.status}</span>
+        ${l.status === 'Available' ? `<button class="mark-sold-btn" onclick="markAsSold('${l._id}')">Mark as Sold</button>` : ''}
+      </div>
     </div>
   `).join('');
 }
