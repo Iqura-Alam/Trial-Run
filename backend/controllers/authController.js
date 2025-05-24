@@ -89,10 +89,11 @@ exports.login = async (req, res) => {
 
     // Generate JWT
     const token = jwt.sign(
-      { userId: user._id, email: user.email },
-      process.env.JWT_SECRET || 'secret123',
-      { expiresIn: '1d' }
-    );
+  { _id: user._id, email: user.email, university: user.university },
+  process.env.JWT_SECRET || 'secret123',
+  { expiresIn: '1d' }
+);
+
 
     // Send success response
     res.status(200).json({

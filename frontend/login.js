@@ -14,9 +14,12 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
     const result = await res.json();
 
     if (res.ok) {
+      localStorage.setItem('token', result.token); // ✅ Store the token
       showLoginMessage("✅ Login successful! Redirecting...", "green");
-      form.reset();
-      // You can add `window.location.href = '/dashboard'` after building your dashboard
+
+      setTimeout(() => {
+        window.location.href = 'dashboard.html'; // ✅ Redirect to listing form
+      }, 1000);
     } else {
       showLoginMessage(result.message || "Login failed.", "red");
     }

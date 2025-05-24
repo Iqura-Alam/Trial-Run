@@ -196,3 +196,10 @@ io.on('connection', (socket) => {
     console.log('🔴 Client disconnected');
   });
 });
+
+const listingRoutes = require('./routes/listings');
+app.use('/api/listings', listingRoutes);
+
+// server.js
+const dashboardRoutes = require('./routes/dashboard');
+app.use('/api/dashboard', dashboardRoutes);

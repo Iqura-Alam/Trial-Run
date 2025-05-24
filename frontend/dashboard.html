@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Welcome to the Student Marketplace</h1>
+    <button id="logoutBtn">Logout</button>
+  </header>
+
+  <main>
+    <input type="text" id="searchBar" placeholder="Search for items or services..." />
+
+    <div id="quickFilters">
+      <button onclick="filterByCategory('Textbooks')">Textbooks</button>
+      <button onclick="filterByCategory('Tutoring')">Tutoring</button>
+      <button onclick="filterByCategory('Electronics')">Electronics</button>
+      <button onclick="filterByCategory('Skill Exchange')">Skill Exchange</button>
+    </div>
+
+    <div id="listingContainer"></div>
+
+    <button onclick="window.location.href='createListing.html'">Create a Listing</button>
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
