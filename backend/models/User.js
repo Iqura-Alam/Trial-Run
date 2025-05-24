@@ -1,25 +1,3 @@
-// const mongoose = require('mongoose');
-
-// const userSchema = new mongoose.Schema({
-//   name: String,
-//   email: { type: String, required: true, unique: true },
-//   password: String,
-//   emailVerified: { type: Boolean, default: false },
-
-//   // Optional academic profile
-//   university: String,
-//   department: String,
-//   program: String,
-//   year: String,
-
-//   // Admin-only fields
-//   phone: String,
-//   dob: Date,
-
-//   emailVerificationToken: String,
-// });
-
-// module.exports = mongoose.model('User', userSchema);
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({

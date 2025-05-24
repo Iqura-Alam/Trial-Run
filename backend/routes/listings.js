@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Listing = require('../models/Listing');
+const Listing = require('../models/Listing'); // Ensure correct capitalization
 const auth = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
@@ -25,6 +25,31 @@ function getVisibilityFilter(userUniversity) {
     ]
   };
 }
+
+// ✅ Feature: My Listings
+router.get('/my-listings', auth, async (req, res) => {
+  try {
+    const listings = await Listing.find({ owner: req.user._id });
+    res.json(listings);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error fetching user listings.' });
+  }
+});
+
+// ✅ Feature: Mark a Listing as Sold
+router.patch('/:id/mark-sold', auth, async (req, res) => {
+  try {
+    const listing = await Listing.findOne({ _id: req.params.id, owner: req.user._id });
+
+    if (!listing) return res.status(404).json({ error: 'Listing not found or unauthorized.' });
+
+    listing.status = 'Sold';
+    await listing.save();
+    res.json({ message: 'Listing marked as sold.', listing });
+  } catch (err) {
+    res.status(500).json({ error: 'Server error marking listing as sold.' });
+  }
+});
 
 // Recent Listings
 router.get('/recent', auth, async (req, res) => {
@@ -101,7 +126,7 @@ router.get('/price', async (req, res) => {
   }
 });
 
-// ✅ Create Listing with image
+// Create Listing with image
 router.post('/', auth, upload.single('image'), async (req, res) => {
   try {
     const {
@@ -135,7 +160,7 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
   }
 });
 
-// ✅ Update listing status to Sold/Available
+// Update listing status to Sold/Available (optional general update route)
 router.patch('/:id/status', auth, async (req, res) => {
   const { status } = req.body;
   if (!['Available', 'Sold'].includes(status)) {

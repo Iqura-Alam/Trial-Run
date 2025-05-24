@@ -1,0 +1,129 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #f2f6fc;
+  min-height: 100vh;
+  color: #1f2937;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  letter-spacing: 0.5px;
+}
+
+.my-listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+}
+
+.my-listing-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 10px 20px rgba(30, 64, 175, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.my-listing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(30, 64, 175, 0.08);
+}
+
+.my-listing-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e5e7eb;
+}
+
+.my-listing-card h3 {
+  color: #1e3a8a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.my-listing-card p {
+  font-size: 0.95rem;
+  color: #4b5563;
+  margin: 4px 0 10px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 9999px;
+  color: white;
+  width: fit-content;
+}
+
+.status-badge.sold {
+  background-color: #dc2626; /* red */
+}
+
+.status-badge.available {
+  background-color: #16a34a; /* green */
+}
+
+.mark-sold-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #1877f2; /* Facebook blue */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease;
+}
+
+.mark-sold-btn:hover {
+  background-color: #165cdb; /* Slightly darker on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-1px);
+}
+
+.mark-sold-btn:active {
+  background-color: #0f4aa5;
+  transform: translateY(1px);
+}
+
+
+.no-listings {
+  text-align: center;
+  color: #6b7280;
+  margin-top: 40px;
+  font-size: 1.2rem;
+  font-style: italic;
+}
