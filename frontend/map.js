@@ -1,60 +1,100 @@
-const map = L.map('map').setView([12.9716, 77.5946], 17); // Replace with your campus coords
-
+let map = L.map('map').setView([23.8103, 90.4125], 7);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 let marker = null;
-let selectedPos = null;
 
-// 📍 Manual click on map
-map.on('click', function (e) {
-  if (marker) map.removeLayer(marker);
+async function fetchPlaces(lat, lng) {
+  // Foursquare category ID for tourist attractions: 16000 (Tourist Attraction)
+  // Docs: https://developer.foursquare.com/docs/categories/
+  const url = new URL('https://api.foursquare.com/v3/places/search');
+  url.searchParams.append('ll', `${lat},${lng}`);
+  url.searchParams.append('radius', 5000); // 5km radius, adjust if needed
+  url.searchParams.append('categories', '16000'); // tourist attractions
+  url.searchParams.append('sort', 'rating'); // sort by rating
+  url.searchParams.append('limit', '5'); // top 5
 
-  selectedPos = e.latlng;
-  marker = L.marker(selectedPos).addTo(map)
-    .bindPopup('Meetup here').openPopup();
+  const res = await fetch(`https://api.foursquare.com/v3/places/search?ll=${lat},${lng}&radius=2000&limit=5&fields=fsq_id,name,location,rating`, {
+  headers: {
+    Authorization: 'fsq3eOQdeMeH36LTEJQ91R25f5RzfAP0qrrWBUKLA13/gOg='
+  }
 });
 
-// ✅ Confirm meetup location
-document.getElementById('confirmBtn').addEventListener('click', async () => {
-  if (!selectedPos) return alert('Select a location on the map.');
+  const data = await res.json();
+  return data.results || [];
+}
 
-  const response = await fetch('http://localhost:5000/api/meetup', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      productId: 'abc123',
-      buyerId: 'user1',
-      sellerId: 'user2',
-      location: selectedPos
-    })
+
+function displayPlaces(places) {
+  const container = document.getElementById('placesContainer');
+  container.innerHTML = '';
+  places.forEach(place => {
+    const rating = place.rating !== undefined ? `⭐ ${place.rating.toFixed(1)}` : 'No rating';
+    const card = document.createElement('div');
+    card.className = 'place-card';
+    card.innerHTML = `
+      <h3>${place.name} <small style="font-weight: normal; color: #666;">${rating}</small></h3>
+      <p>${place.location?.formatted_address || 'No address available'}</p>
+    `;
+    container.appendChild(card);
   });
+}
 
-  const data = await response.json();
-  alert('Location saved with ID: ' + data._id);
-});
 
-// 🔍 Search and pinpoint location using OpenStreetMap (Nominatim)
-window.searchLocation = async function () {
-  const query = document.getElementById('locationSearch').value.trim();
-  if (!query) return alert('Enter a location to search');
+document.getElementById('locationInput').addEventListener('input', async (e) => {
+  const query = e.target.value.trim();
+  const suggestionsDiv = document.getElementById('suggestions');
+  suggestionsDiv.innerHTML = '';
+  if (!query) return;
 
   try {
-    const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
-    const results = await response.json();
+    const res = await fetch(`http://localhost:3000/api/institutes?q=${encodeURIComponent(query)}`);
+    const institutes = await res.json();
 
-    if (results.length === 0) return alert('Location not found');
+    institutes.forEach(inst => {
+      const div = document.createElement('div');
+      div.textContent = inst.name;
+      div.onclick = async () => {
+        document.getElementById('locationInput').value = inst.name;
+        suggestionsDiv.innerHTML = '';
 
-    const lat = parseFloat(results[0].lat);
-    const lon = parseFloat(results[0].lon);
-    selectedPos = { lat, lng: lon };
+        const lat = parseFloat(inst.latitude);
+        const lng = parseFloat(inst.longitude);
+        map.setView([lat, lng], 16);
 
-    if (marker) map.removeLayer(marker);
-    marker = L.marker(selectedPos).addTo(map)
-      .bindPopup('Meetup here').openPopup();
+        if (marker) map.removeLayer(marker);
+        marker = L.marker([lat, lng], { draggable: true }).addTo(map).bindPopup(inst.name).openPopup();
 
-    map.setView([lat, lon], 18);
+        const nearby = await fetchPlaces(lat, lng);
+        displayPlaces(nearby);
+      };
+      suggestionsDiv.appendChild(div);
+    });
   } catch (err) {
-    console.error('Geocoding failed:', err);
-    alert('Error searching for location');
+    console.error(err);
   }
-};
+});
+
+document.getElementById('goBtn').addEventListener('click', async () => {
+  const name = document.getElementById('locationInput').value.trim();
+  if (!name) return alert('Enter an institution name');
+
+  const res = await fetch(`http://localhost:3000/api/institutes?q=${encodeURIComponent(name)}`);
+  const results = await res.json();
+  if (results.length === 0) return alert('Institution not found');
+
+  const inst = results[0];
+  const lat = parseFloat(inst.latitude);
+  const lng = parseFloat(inst.longitude);
+
+  map.setView([lat, lng], 16);
+  if (marker) map.removeLayer(marker);
+  marker = L.marker([lat, lng], { draggable: true }).addTo(map).bindPopup(inst.name).openPopup();
+
+  const nearby = await fetchPlaces(lat, lng);
+  displayPlaces(nearby);
+});
+
+map.on('click', function (e) {
+  if (marker) map.removeLayer(marker);
+  marker = L.marker(e.latlng).addTo(map).bindPopup('Manual Marker').openPopup();
+});
