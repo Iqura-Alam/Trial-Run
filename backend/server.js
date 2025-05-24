@@ -7,6 +7,8 @@ const socketIo = require('socket.io');
 const multer = require('multer');
 const path = require('path');
 const Listing = require('./models/Listing');
+const exploreRoutes = require('./routes/explore');
+
 dotenv.config();
 
 const app = express();
@@ -24,6 +26,9 @@ const io = socketIo(server, {
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use('/api/explore', exploreRoutes);
+
+
 
 app.get('/api/check-items', async (req, res) => {
   try {
@@ -34,7 +39,7 @@ app.get('/api/check-items', async (req, res) => {
   }
 });
 // Static folder for uploaded images
-app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'public')));
 // Test route
 app.get('/', (req, res) => {
@@ -59,8 +64,12 @@ app.use('/api/dashboard', dashboardRoutes);
 
 // Multer setup for image uploads
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'public/uploads/'),
-  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
+  destination: (req, file, cb) => cb(null, path.join(__dirname, 'uploads')),  // <-- Changed here
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9) + ext;
+    cb(null, uniqueName);
+  }
 });
 const upload = multer({ storage });
 

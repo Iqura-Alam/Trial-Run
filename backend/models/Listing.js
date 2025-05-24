@@ -10,7 +10,9 @@ const listingSchema = new mongoose.Schema({
   category: String,
   visibility: { type: String, enum: ['UniversityOnly', 'Global'], required: true },
   university: { type: String, required: true },
-  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }, // link to logged in user
-},{ timestamps: true });
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  imageUrl: String, // path to uploaded image
+  status: { type: String, enum: ['Available', 'Sold'], default: 'Available' } // product status
+}, { timestamps: true });
 
 module.exports = mongoose.model('Listing', listingSchema);

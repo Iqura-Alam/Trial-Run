@@ -45,17 +45,28 @@ function renderListings(listings) {
   container.innerHTML = "";
 
   listings.forEach(listing => {
+    const imageUrl = listing.imageUrl
+      ? `http://localhost:3000/uploads/${listing.imageUrl}`
+      : 'default-image.png';
+
+    // Determine status class and text
+    const statusClass = listing.status && listing.status.toLowerCase() === 'sold' ? 'sold' : 'available';
+    const statusText = listing.status || 'Available';
+
     const card = document.createElement('div');
     card.className = 'listing-card';
     card.innerHTML = `
+      <img src="${imageUrl}" alt="${listing.title}" class="listing-image" />
       <h3>${listing.title}</h3>
       <p>${listing.category} • ${listing.priceType}: ${listing.price}</p>
       <p>${listing.university}</p>
+      <span class="status-badge ${statusClass}">${statusText}</span>
       <button onclick="viewListing('${listing._id}')">Chat</button>
     `;
     container.appendChild(card);
   });
 }
+
 
 function viewListing(id) {
   window.location.href = `chat.html?id=${id}`;

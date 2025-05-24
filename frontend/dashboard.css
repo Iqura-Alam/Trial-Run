@@ -153,3 +153,35 @@ body {
   width: 100%;
   font-weight: bold;
 }
+
+.listing-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+}
+
+/* Status badge */
+.status-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 12px;
+  margin-top: 8px;
+  color: white;
+  user-select: none;
+}
+
+/* Sold - red badge */
+.status-badge.sold {
+  background-color: #dc2626; /* red-600 */
+}
+
+/* Available - green badge */
+.status-badge.available {
+  background-color: #16a34a; /* green-600 */
+}
+

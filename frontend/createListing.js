@@ -13,19 +13,14 @@ form?.addEventListener('submit', async (e) => {
   }
 
   const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-
-  // Ensure numeric type for price
-  data.price = Number(data.price) || 0;
 
   try {
     const res = await fetch('http://localhost:3000/api/listings', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}` // Don't set Content-Type when using FormData
       },
-      body: JSON.stringify(data)
+      body: formData
     });
 
     const result = await res.json();
