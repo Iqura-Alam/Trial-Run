@@ -17,4 +17,4 @@ async function sendEmail(to, subject, html) {
   });
 }
 
-module.exports = sendEmail; 
+module.exports = sendEmail;
