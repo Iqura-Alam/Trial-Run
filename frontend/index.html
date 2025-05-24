@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CampusMarket</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="bg-white shadow-xl rounded-2xl w-full max-w-4xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
+
+    <!-- Left Panel -->
+    <div class="bg-blue-600 text-white p-10 flex flex-col justify-center">
+      <h1 class="text-4xl font-bold mb-4">Welcome to CampusMarket</h1>
+      <p class="text-lg">Buy and sell items with verified students.</p>
+      <div class="mt-10">
+        <button onclick="showForm('login')" class="action-btn mr-2">Login</button>
+        <button onclick="showForm('signup')" class="action-btn">Sign Up</button>
+      </div>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="p-8 md:p-10" id="formContainer">
+
+      <!-- Login Form -->
+      <form id="loginForm">
+        <h2 class="form-title">Login</h2>
+
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-input" required />
+
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-input" required />
+
+        <button type="submit" class="submit-btn">Login</button>
+        <div id="loginMessage" class="text-center mt-4 font-semibold"></div>
+      </form>
+
+      <!-- Sign Up Form -->
+      <form id="signupForm" class="hidden">
+
+        <h2 class="form-title">Register</h2>
+
+        <label class="form-label">Full Name</label>
+        <input type="text" name="name" class="form-input" required>
+
+        <label class="form-label">University</label>
+        <select id="university" name="university" class="form-input" required>
+          <option value="">-- Select --</option>
+          <option value="Islamic University of Technology" data-domain="iut-dhaka.edu">IUT</option>
+          <option value="University of Dhaka" data-domain="du.ac.bd">DU</option>
+          <option value="BRAC University" data-domain="bracu.ac.bd">BRACU</option>
+        </select>
+
+        <label class="form-label">Email</label>
+        <div class="flex items-center">
+          <input type="text" id="emailLocal" class="form-input mr-2" placeholder="yourid" required />
+          <span id="domain" class="text-sm bg-gray-200 py-2 px-3 rounded">@domain.edu</span>
+        </div>
+
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-input" required />
+
+        <hr class="my-4">
+
+        <h3 class="text-lg font-semibold mb-2">Academic Info (Optional)</h3>
+        <input type="text" name="department" class="form-input" placeholder="Department" />
+        <input type="text" name="program" class="form-input" placeholder="Program" />
+        <input type="number" name="year" class="form-input" placeholder="Year of Study" min="1" />
+
+        <hr class="my-4">
+
+        <h3 class="text-lg font-semibold mb-2">Private Info (Required)</h3>
+        <input type="tel" name="phone" class="form-input" placeholder="Phone Number" required />
+        <input type="date" name="dob" class="form-input" required />
+
+        <button type="submit" class="submit-btn">Register</button>
+        <div id="signupMessage" class="text-center mt-4 font-semibold"></div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="homepage.js"></script>
+<script src="register.js"></script>
+<script src="login.js"></script>
+</body>
+</html>

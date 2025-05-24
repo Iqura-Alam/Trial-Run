@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sendEmail = require('../utils/sendEmail');
 
+
 exports.register = async (req, res) => {
   const { name, email, password, university, department, program, year, phone, dob } = req.body;
 
@@ -58,5 +59,55 @@ exports.verifyEmail = async (req, res) => {
     res.status(200).json({ message: 'Email verified. You can now log in.' });
   } catch (err) {
     return res.status(400).json({ message: 'Invalid or expired token.' });
+  }
+};
+
+
+exports.login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Validate required fields
+    if (!email || !password) {
+      return res.status(400).json({ message: 'Email and password are required.' });
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user)
+      return res.status(401).json({ message: 'Invalid email or password.' });
+
+    // Check email verification
+    // if (!user.isVerified) {
+    //   return res.status(403).json({ message: 'Please verify your email first.' });
+    // }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch)
+      return res.status(401).json({ message: 'Invalid email or password.' });
+
+    // Generate JWT
+    const token = jwt.sign(
+      { userId: user._id, email: user.email },
+      process.env.JWT_SECRET || 'secret123',
+      { expiresIn: '1d' }
+    );
+
+    // Send success response
+    res.status(200).json({
+      message: 'Login successful',
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        university: user.university,
+      },
+    });
+
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
   }
 };
