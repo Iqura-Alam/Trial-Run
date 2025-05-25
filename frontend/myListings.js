@@ -2,7 +2,7 @@ const container = document.getElementById('listingsContainer');
 const token = localStorage.getItem('token');
 
 async function fetchMyListings() {
-  const res = await fetch('http://localhost:3000/api/listings/my-listings', {
+  const res = await fetch('https://trial-run-ibp5.onrender.com/api/listings/my-listings', {
     headers: {
       'Authorization': `Bearer ${token}`
     }
@@ -22,7 +22,7 @@ async function fetchMyListings() {
 }
 
 async function markAsSold(id) {
-  const res = await fetch(`http://localhost:3000/api/listings/${id}/mark-sold`, {
+  const res = await fetch(`https://trial-run-ibp5.onrender.com/api/listings/${id}/mark-sold`, {
     method: 'PATCH',
     headers: {
       'Authorization': `Bearer ${token}`
