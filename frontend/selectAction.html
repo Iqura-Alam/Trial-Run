@@ -59,6 +59,15 @@
     .sell:hover {
       background-color: #1565c0;
     }
+
+    .ai {
+      background-color: #ff9100;
+      color: white;
+    }
+
+    .ai:hover {
+      background-color: #ef6c00;
+    }
   </style>
 </head>
 <body>
@@ -66,6 +75,7 @@
     <h1>What would you like to do?</h1>
     <button class="choice-btn buy" onclick="redirect('explore.html')">Buy Products</button>
     <button class="choice-btn sell" onclick="redirect('dashboard.html')">Sell Products</button>
+    <button class="choice-btn ai" onclick="redirectExternal('http://localhost:3000/chatbot.html')">Explore with AI</button>
   </div>
 
   <script>
@@ -73,6 +83,12 @@
       const token = localStorage.getItem('token');
       if (!token) return window.location.href = 'login.html';
       window.location.href = page;
+    }
+
+    function redirectExternal(url) {
+      const token = localStorage.getItem('token');
+      if (!token) return window.location.href = 'login.html';
+      window.location.href = url;
     }
   </script>
 </body>
