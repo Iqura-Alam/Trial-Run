@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const query = e.target.value.trim();
     if (query.length === 0) return loadOthersListings();
 
-    const res = await fetch(`http://localhost:3000/api/explore/search?q=${encodeURIComponent(query)}`, {
+    const res = await fetch(`https://trial-run-ibp5.onrender.com/api/explore/search?q=${encodeURIComponent(query)}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     const results = await res.json();
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function filterByCategory(category) {
   const token = localStorage.getItem('token');
-  fetch(`http://localhost:3000/api/explore/category/${category}`, {
+  fetch(`https://trial-run-ibp5.onrender.com/api/explore/category/${category}`, {
     headers: { Authorization: `Bearer ${token}` }
   })
     .then(res => res.json())
@@ -33,7 +33,7 @@ function filterByCategory(category) {
 
 async function loadOthersListings() {
   const token = localStorage.getItem('token');
-  const res = await fetch('http://localhost:3000/api/explore/recent', {
+  const res = await fetch('https://trial-run-ibp5.onrender.com/api/explore/recent', {
     headers: { Authorization: `Bearer ${token}` }
   });
   const data = await res.json();
@@ -46,7 +46,7 @@ function renderListings(listings) {
 
   listings.forEach(listing => {
     const imageUrl = listing.imageUrl
-      ? `http://localhost:3000/uploads/${listing.imageUrl}`
+      ? `https://trial-run-ibp5.onrender.com/uploads/${listing.imageUrl}`
       : 'default-image.png';
 
     // Determine status class and text
@@ -94,7 +94,7 @@ async function filterByPrice() {
   }
 
   try {
-    const res = await fetch(`http://localhost:3000/api/listings/price?min=${min}&max=${max}`, {
+    const res = await fetch(`https://trial-run-ibp5.onrender.com/api/listings/price?min=${min}&max=${max}`, {
       headers: { Authorization: `Bearer ${token}` }
     });
 
