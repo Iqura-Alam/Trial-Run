@@ -5,7 +5,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async (e) => {
   const data = Object.fromEntries(formData.entries());
 
   try {
-    const res = await fetch('http://localhost:3000/api/auth/login', {
+    const res = await fetch('https://trial-run-ibp5.onrender.com/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
