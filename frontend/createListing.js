@@ -15,7 +15,7 @@ form?.addEventListener('submit', async (e) => {
   const formData = new FormData(form);
 
   try {
-    const res = await fetch('http://localhost:3000/api/listings', {
+    const res = await fetch('https://trial-run-ibp5.onrender.com/api/listings', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}` // Don't set Content-Type when using FormData
